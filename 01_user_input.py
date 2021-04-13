@@ -10,10 +10,17 @@
 # Number checking funtion
 def int_check(question, low=None, high=None):
 
-    situtaion = ""
+    situation = ""
 
+    # If user has specified a low and a high
+    # number (eg. when guessing)
+    # set the situation to 'both'
     if low is not None and high is not None:
         situation = "both"
+
+    # If user has only specified a low number
+    # (eg. when enetering high number)
+    # set situation to 'low only'
     elif low is not None and high is None:
         situation = "low only"
 
@@ -47,7 +54,24 @@ def int_check(question, low=None, high=None):
 # Main routine
 
 
+rounds_played = 0
+
+guesses = 5
+
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
 rounds = int_check("Rounds: ", 1)
-guess = int_check("Guess: ", lowest, highest)
+
+# Beginning of game loop
+end_game = "no"
+while end_game == "no":
+
+    if rounds != "":
+        heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
+        print(heading)
+
+    guess = int_check("Guess: ", lowest, highest)
+    guesses = guess - 1
+
+    if guesses == 0:
+        print("You have run out of guesses")
