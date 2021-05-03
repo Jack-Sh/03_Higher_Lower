@@ -79,11 +79,12 @@ while guess != SECRET and guesses_left >= 1:
 
     guess = int_check("Guess: ", lowest, highest)
     
+    guesses_left -= 1
 
     if guesses_left < 1:
         print("You have run out of guesses")
         break
-
-    if guess == SECRET:
+    elif guess == SECRET:
         print("Congratulations you guessed the secret number")
         break
+
