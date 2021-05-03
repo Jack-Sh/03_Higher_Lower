@@ -53,25 +53,37 @@ def int_check(question, low=None, high=None):
 
 # Main routine
 
+SECRET = 5
+
+GUESSES_ALLOWED = 5
 
 rounds_played = 0
 
-guesses = 5
+guesses_left = GUESSES_ALLOWED
+
+guess = ""
 
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
 rounds = int_check("Rounds: ", 1)
 
 # Beginning of game loop
-end_game = "no"
-while end_game == "no":
+while guess != SECRET and guesses_left >= 1:
 
     if rounds != "":
         heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
         print(heading)
 
-    guess = int_check("Guess: ", lowest, highest)
-    guesses = guess - 1
+    if rounds_played == rounds:
+        break
 
-    if guesses == 0:
+    guess = int_check("Guess: ", lowest, highest)
+    
+
+    if guesses_left < 1:
         print("You have run out of guesses")
+        break
+
+    if guess == SECRET:
+        print("Congratulations you guessed the secret number")
+        break
