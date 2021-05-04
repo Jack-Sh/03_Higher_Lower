@@ -63,28 +63,41 @@ guesses_left = GUESSES_ALLOWED
 
 guess = ""
 
+# Check all given numbers
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
 rounds = int_check("Rounds: ", 1)
 
 # Beginning of game loop
+# Whilst the secret number isn't guessed
+# and the user hasn't run out of guesses
+# continue the loop
 while guess != SECRET and guesses_left >= 1:
 
+    # Print rounds heading based on rounds chosen
     if rounds != "":
         heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
         print(heading)
 
-    if rounds_played == rounds:
-        break
-
+    # Ask user for guess and check that it's valid
     guess = int_check("Guess: ", lowest, highest)
     
+    # Take one away from guesses left everytime a number is guessed
     guesses_left -= 1
 
-    if guesses_left < 1:
-        print("You have run out of guesses")
-        break
-    elif guess == SECRET:
+    # If user guesses secret congratulate go next round
+    if guess == SECRET:
         print("Congratulations you guessed the secret number")
-        break
+        rounds_played += 1
 
+    # If the user has run out of guesses go next round
+    elif guesses_left < 1:
+        print("You have run out of guesses")
+        rounds_played += 1
+
+    # If the user has played all rounds chosen
+    # break the loop
+    if rounds_played != rounds:
+        continue
+    else:
+        break
