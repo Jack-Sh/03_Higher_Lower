@@ -69,15 +69,15 @@ highest = int_check("High Number: ", lowest + 1)
 rounds = int_check("Rounds: ", 1)
 
 # Beginning of game loop
+if rounds != "":
+    heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
+    print(heading)
 # Whilst the secret number isn't guessed
 # and the user hasn't run out of guesses
 # continue the loop
 while guess != SECRET and guesses_left >= 1:
 
     # Print rounds heading based on rounds chosen
-    if rounds != "":
-        heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
-        print(heading)
 
     # Ask user for guess and check that it's valid
     guess = int_check("Guess: ", lowest, highest)
