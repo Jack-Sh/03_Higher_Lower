@@ -72,6 +72,7 @@ rounds = int_check("Rounds: ", 1)
 if rounds != "":
     heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
     print(heading)
+
 # Whilst the secret number isn't guessed
 # and the user hasn't run out of guesses
 # continue the loop
