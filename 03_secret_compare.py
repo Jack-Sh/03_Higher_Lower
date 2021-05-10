@@ -53,17 +53,17 @@ def int_check(question, low=None, high=None):
 
 lowest = 1
 highest = 10
-secret = 5
+SECRET = 5
 
 guess = ""
 
-while guess != secret:
+while guess != SECRET:
 
     guess = int_check("Guess: ", lowest, highest)
 
-    if guess < secret:
+    if guess < SECRET:
         print("Too low! Try again")
-    elif guess > secret:
+    elif guess > SECRET:
         print("Too high! Try again")
     else:
         print("Congratulations! You guessed the secret number")
