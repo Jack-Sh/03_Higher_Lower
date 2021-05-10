@@ -54,15 +54,12 @@ def int_check(question, low=None, high=None):
 # Main routine
 
 SECRET = ""
-GUESSES_ALLOWED = 5
 
 already_guessed = []
-guesses_left = GUESSES_ALLOWED
 
 rounds_played = 0
 
 guess = ""
-round_end = ""
 
 # Check all given numbers
 lowest = int_check("Low Number: ")
@@ -71,14 +68,12 @@ rounds = int_check("Rounds: ", 1)
 
 # Start of game loop
 
-# Get secret
-SECRET = random.randint(lowest, highest)
-print(SECRET)
 
 # Whilst the secret number isn't guessed
 # and the user hasn't run out of guesses
 # continue the loop
-while guess != SECRET and guesses_left >= 1:
+game_end = "no"
+while game_end != "yes":
 
     # If user enters a valid integer print heading
     # If user enters <enter> print heading
@@ -86,51 +81,66 @@ while guess != SECRET and guesses_left >= 1:
         heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
         print(heading)
 
-    # Ask user for guess and check it's valid
-    guess = int_check("Guess: ", lowest, highest)
+    # Get secret
+    SECRET = random.randint(lowest, highest)
+    print(SECRET)
 
-    # Checks that guess isn't duplicate
-    if guess in already_guessed:
-        print("You already guessed than number! Please try again. You still have {} guesses left".format(guesses_left))
-        continue
+    GUESSES_ALLOWED = 5
+    guesses_left = GUESSES_ALLOWED
 
-    # Take one guess away and add guess to list
-    guesses_left -= 1
-    already_guessed.append(guess)
+    round_end = "no"
+    while round_end != "yes":
 
-    if guesses_left >= 1:
-        
-        if guess < SECRET:
-            print("Too low! Try a higher number. You have {} guesses left".format(guesses_left))
+        # Ask user for guess and check it's valid
+        guess = int_check("Guess: ", lowest, highest)
 
-        elif guess > SECRET:
-            print("Too high! Try a lower number. You have {} guesses left".format(guesses_left))
-    else:
-        if guess < SECRET:
-            print("Too low!")
-        
-        elif guess > SECRET:
-            print("Too high!")
+        # Checks that guess isn't duplicate
+        if guess in already_guessed:
+            print("You already guessed than number! Please try again. You still have {} guesses left".format(guesses_left))
+            continue
 
-    if guess == SECRET:
-        
-        if guesses_left + 1 == GUESSES_ALLOWED:
-            print("Amazing! You guessed the secret number first try!")
-            round_end = "yes"
+        # Take one guess away and add guess to list
+        guesses_left -= 1
+        already_guessed.append(guess)
 
+        if guesses_left >= 1:
+            
+            if guess < SECRET:
+                print("Too low! Try a higher number. You have {} guesses left".format(guesses_left))
+
+            elif guess > SECRET:
+                print("Too high! Try a lower number. You have {} guesses left".format(guesses_left))
         else:
-            print("Well done! You guessed the secret number with {} guesses remaining".format(guesses_left))
+            if guess < SECRET:
+                print("Too low!")
+            
+            elif guess > SECRET:
+                print("Too high!")
+
+        if guess == SECRET:
+            
+            if guesses_left + 1 == GUESSES_ALLOWED:
+                print("Amazing! You guessed the secret number first try!")
+                round_end = "yes"
+
+            else:
+                print("Well done! You guessed the secret number with {} guesses remaining".format(guesses_left))
+                round_end = "yes"
+        
+        if guesses_left == 0:
+            print("You have run out of guesses. Good try!")
             round_end = "yes"
+
+        if rounds_played != rounds and round_end == "yes":
+            rounds_played += 1
+            GUESSES_ALLOWED += 5
+            game_end == "no"
+            continue
+
+        elif rounds_played == rounds and round_end == "yes":
+            print("Thanks for playing!")
+            game_end == "yes"
+            break
     
-    if guesses_left == 0:
-        print("You have run out of guesses. Good try!")
-        round_end = "yes"
 
-    if rounds != rounds_played and round_end == "yes":
-        rounds_played += 1
-        print(heading)
-        continue
-
-    else:
-        print("Thanks for playing!")
-        break
+print("swaggy ")
