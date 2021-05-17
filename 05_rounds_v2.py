@@ -42,8 +42,6 @@ def int_check(question, low=None, high=None):
                 if response < low:
                     print("Please enter a number that is more than (or equal to) {}".format(low))
                     continue
-                elif response == "":
-                    continue
 
             return response
 
@@ -51,6 +49,36 @@ def int_check(question, low=None, high=None):
         except ValueError:
             print("Please enter an integer")
             continue
+
+
+# Checks specifically rounds, if it is infinite or an integer
+def check_rounds():
+
+    while True:
+        # Ask user how many rounds
+        response = input("Rounds: ")
+
+        round_error = "Please enter an integer greater than 0"
+
+        # If user DOESN'T type <enter> check to see
+        # if it is a valid integer
+
+        if response != "":
+            try:
+                response = int(response)
+
+                if response < 1:
+                    print(round_error)
+                    continue
+
+            # If the user doesn't type a valid response
+            # print an error message (program won't break)
+
+            except ValueError:
+                print(round_error)
+                continue
+
+        return response
 
 
 # Main routine
@@ -69,8 +97,7 @@ guess = ""
 # Check all given numbers
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
-rounds = int_check("Rounds: ", 1)
-
+rounds = check_rounds()
 # Start of game loop
 
 # if the user hasn't played all the given rounds
@@ -79,15 +106,15 @@ while rounds_played != rounds:
 
     # If user enters a valid integer print heading
     # If user enters <enter> print heading
-    if rounds != "":
-        heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
-        print(heading)
-        rounds_played += 1
+    if rounds == "":
+        heading = "Continuous Mode: Round {}".format(rounds_played + 1)
 
-    elif rounds == "":
-        heading = "Infinite Mode: Round {}".format(rounds_played + 1)
-        print(heading)
-        rounds_played += 1
+    else:
+        heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
+
+    print(heading)
+    print()
+    rounds_played += 1
 
     # Get secret
     SECRET = random.randint(lowest, highest)
@@ -99,6 +126,8 @@ while rounds_played != rounds:
 
         # get users guess and check that it's valid
         guess = int_check("Guess: ", lowest, highest)
+        if guess == "xxx":
+            break
 
         # checks that guess isn't duplicate
         if guess in already_guessed:
@@ -146,6 +175,7 @@ while rounds_played != rounds:
         # if the user runs out of guesses and doesn't guess the secret
         # print statement
         if guesses_left == 0 and guess != SECRET:
+            print()
             print("You have run out of guesses. Good try!")
 
         # if user runs of of guesses or guesses secret and hasn't played all given rounds
@@ -155,6 +185,7 @@ while rounds_played != rounds:
             GUESSES_ALLOWED += 5
             guesses_left = GUESSES_ALLOWED
             already_guessed.clear()
+            break
 
 # print end game message
 print("Thanks for Playing!")

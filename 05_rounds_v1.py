@@ -1,4 +1,4 @@
-# HL component 5 - add in round mechanics
+# HL component 5 - add in rounds mechanics
 
 # To Do
 # set up round heading
@@ -67,10 +67,11 @@ guess = ""
 # Check all given numbers
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
-rounds = int_check("Rounds: ", 1)
-
+rounds = int_check
 # Start of game loop
 
+# if the user hasn't played all the given rounds
+# continue the loop
 while rounds_played != rounds:
 
     # If user enters a valid integer print heading
@@ -84,47 +85,68 @@ while rounds_played != rounds:
     SECRET = random.randint(lowest, highest)
     print(SECRET)
 
+    # if the secret is guessed or user runs out of guesses
+    # break the loop
     while guess != SECRET and guesses_left != 0:
 
+        # get users guess and check that it's valid
         guess = int_check("Guess: ", lowest, highest)
 
-        # Checks that guess isn't duplicate
+        # checks that guess isn't duplicate
         if guess in already_guessed:
             print("You already guessed than number! Please try again. You still have {} guesses left".format(guesses_left))
             continue
-
+    
+        # add valid guess to list and
+        # take away 1 from total guesses
         guesses_left -= 1
         already_guessed.append(guess)
 
+        # if user has more than one guess left print one of the following statements
         if guesses_left >= 1:
-
+ 
+            # if user guesses lower than secret
             if guess < SECRET:
                 print("Too low! Try a higher number. You have {} guesses left".format(guesses_left))
 
+            # if user guesses higher than secret
             elif guess > SECRET:
                 print("Too high! Try a lower number. You have {} guesses left".format(guesses_left))
+
+        # if user has 1 guess left
         else:
+
+            # if user guesses lower than secret
             if guess < SECRET:
                 print("Too low!")
 
+            # if user guesses higher than secret
             elif guess > SECRET:
                 print("Too high!")
 
+        # if user guesses secret print one of the following statements
         if guess == SECRET:
 
+            # if user guesses secret first try
             if guesses_left + 1 == GUESSES_ALLOWED:
                 print("Amazing! You guessed the secret number first try!")
 
+            # if user guesses secret (print guesses left)
             else:
                 print("Well done! You guessed the secret number with {} guesses remaining".format(guesses_left))
 
+        # if the user runs out of guesses and doesn't guess the secret
+        # print statement
         if guesses_left == 0 and guess != SECRET:
             print("You have run out of guesses. Good try!")
 
+        # if user runs of of guesses or guesses secret and hasn't played all given rounds
+        # continue the loop, reset the list of guesses and reset guesses allowed
         if guess == SECRET or guesses_left == 0 and rounds_played != rounds:
             GUESSES_ALLOWED = 0
             GUESSES_ALLOWED += 5
             guesses_left = GUESSES_ALLOWED
             already_guessed.clear()
 
+# print end game message
 print("Thanks for Playing!")
