@@ -1,4 +1,4 @@
-# HL component 5 v2 - add in infinite rounds
+# HL component 5 v3 - add in 'xxx' exit code
 
 # To Do
 # set up round heading
@@ -26,29 +26,35 @@ def int_check(question, low=None, high=None):
 
     while True:
 
-        try:
-            response = int(input(question))
+        response = input(question)
 
-            # checks input is not too high or
-            # too low if both upper and lower bounds
-            # are specified
-            if situation == "both":
-                if response < low or response > high:
-                    print("Please enter a number between {} and {}".format(low, high))
-                    continue
+        if situation == "both" and response == "xxx":
+            break
+        else:
 
-            # checks input is not too low
-            elif situation == "low only":
-                if response < low:
-                    print("Please enter a number that is more than (or equal to) {}".format(low))
-                    continue
+            try:
+                response = int(input(question))
 
-            return response
+                # checks input is not too high or
+                # too low if both upper and lower bounds
+                # are specified
+                if situation == "both":
+                    if response < low or response > high:
+                        print("Please enter a number between {} and {}".format(low, high))
+                        continue
 
-        # checks input is an integer
-        except ValueError:
-            print("Please enter an integer")
-            continue
+                # checks input is not too low
+                elif situation == "low only":
+                    if response < low:
+                        print("Please enter a number that is more than (or equal to) {}".format(low))
+                        continue
+
+                return response
+
+            # checks input is an integer
+            except ValueError:
+                print("Please enter an integer")
+                continue
 
 
 # Checks specifically rounds, if it is infinite or an integer
@@ -112,7 +118,7 @@ while rounds_played != rounds:
     else:
         heading = "Rounds {} of {}".format(rounds_played + 1, rounds)
 
-    print
+    print()
     print(heading)
     print()
     rounds_played += 1
