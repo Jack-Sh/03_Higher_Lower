@@ -92,6 +92,7 @@ def int_check(question, low=None, high=None, exit_code=None):
 SECRET = ""
 
 already_guessed = []
+game_summary = []
 
 rounds_played = 0
 
