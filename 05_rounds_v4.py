@@ -1,4 +1,4 @@
-# HL component 5 v3 - add in 'xxx' exit code
+# HL component 5 v4 - implement rounds back into original function
 
 # To Do
 # set up round heading
@@ -55,36 +55,6 @@ def int_check(question, low=None, high=None, exit_code=None):
             continue
 
 
-# Checks specifically rounds, if it is infinite or an integer
-def check_rounds():
-
-    while True:
-        # Ask user how many rounds
-        response = input("Rounds: ")
-
-        round_error = "Please enter an integer greater than 0"
-
-        # If user DOESN'T type <enter> check to see
-        # if it is a valid integer
-
-        if response != "":
-            try:
-                response = int(response)
-
-                if response < 1:
-                    print(round_error)
-                    continue
-
-            # If the user doesn't type a valid response
-            # print an error message (program won't break)
-
-            except ValueError:
-                print(round_error)
-                continue
-
-        return response
-
-
 # Main routine
 
 SECRET = ""
@@ -101,7 +71,7 @@ guess = ""
 # Check all given numbers
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
-rounds = check_rounds()
+rounds = int_check("Rounds: ", 1, 1000, "")
 # Start of game loop
 
 
