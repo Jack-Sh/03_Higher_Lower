@@ -1,4 +1,5 @@
 import random
+import math
 
 # Functions
 
@@ -98,8 +99,8 @@ rounds_played = 0
 rounds_won = 0
 rounds_lost = 0
 
-GUESSES_ALLOWED = 5
-guesses_left = GUESSES_ALLOWED
+max_guesses = ""
+guesses_left = max_guesses
 
 guess = ""
 
@@ -122,6 +123,14 @@ if played_before_response == "no":
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
 rounds = int_check("Rounds: ", 1, 1000, "")
+
+for item in range(0, 4):
+
+    num_range = highest - lowest + 1
+    max_raw = math.log2(num_range)
+    max_upped = math.ceil(max_raw)
+    max_guesses = max_upped + 1
+    print("Max Guesses: {}".format(max_guesses))
 
 # Start of game loop
 while rounds_played != rounds:
