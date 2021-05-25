@@ -194,16 +194,21 @@ while rounds_played != rounds:
             already_guessed.clear()
             break
 
-if result == "lost" or result == "won":
-    outcome = "Round {}: you {}".format(rounds_played + 1, result)
+    # if the guess is not 'xxx' then add the outcome to the list
+    if guess != "xxx":
 
-game_summary.append(outcome)
+        # outcome format
+        if result == "lost" or result == "won":
+            outcome = "Round {}: you {}".format(rounds_played, result)
 
-# Ask user if they want to see their game score
+        # structures outcome in a list
+        game_summary.append(outcome)
+
+# Ask user if they want to see their game history
 game_score = "Do you want to see your game history? "
 game_score_response = choice_checker(question=game_score, valid_list=yes_no_list, error="Please enter yes or no")
 
-# If 'yes' show game score
+# If 'yes' show game history in list format
 if game_score_response == "yes":
     print()
     print("Game History")

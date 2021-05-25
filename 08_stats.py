@@ -1,43 +1,11 @@
+# HL component 8 - implement statistics after the game ends
+
+# To Do
+# rounds won / lost
+# do the math using rounds_played
+# print the outcome after every game
+
 import random
-
-# Functions
-
-
-# Choice checker function, response must be out of a specified valid list
-# also works for the first letter of the word
-def choice_checker(question, valid_list, error):
-    valid = False
-    while not valid:
-
-        # Ask user for choice (and put in lowercase)
-        response = input(question).lower()
-
-        # iterates through list and if response is an item
-        # in the list (or the first letter of an item), the
-        # full item name is returned
-
-        for item in valid_list:
-            if response == item[0] or response == item:
-                return item
-
-        else:
-            print(error)
-
-
-# Functions to display instructions when called
-def instructions():
-    print()
-    print("How to play!")
-    print()
-    print("For each game you will be asked to...")
-    print("- Enter a 'low' and a 'high' number.")
-    print("- The computer will then generate the secret number")
-    print("- The computer will caculate how many guesses you get")
-    print("- Enter the number of rounds you want to play")
-    print("- Begin guessing the secret number")
-    print()
-    print("Good Luck!")
-    print()
 
 
 # Function to check low, high, guess, and round numbers
@@ -88,7 +56,29 @@ def int_check(question, low=None, high=None, exit_code=None):
             continue
 
 
+# Choice checker function, response must be out of a specified valid list
+# also works for the first letter of the word
+def choice_checker(question, valid_list, error):
+    valid = False
+    while not valid:
+
+        # Ask user for choice (and put in lowercase)
+        response = input(question).lower()
+
+        # iterates through list and if response is an item
+        # in the list (or the first letter of an item), the
+        # full item name is returned
+
+        for item in valid_list:
+            if response == item[0] or response == item:
+                return item
+
+        else:
+            print(error)
+
+
 # Main routine
+
 SECRET = ""
 
 already_guessed = []
@@ -103,27 +93,18 @@ guesses_left = GUESSES_ALLOWED
 
 guess = ""
 
-end_game = "no"
-
 # Valid lists
 yes_no_list = ["yes", "no"]
-
-# Ask user if they have played before
-played_before = "Have you played before? "
-played_before_response = choice_checker(question=played_before,
-                                        valid_list=yes_no_list,
-                                        error="Please choose from yes or no")
-
-# if played_before is equal to 'no' show instructions
-if played_before_response == "no":
-    instructions()
 
 # Check all given numbers
 lowest = int_check("Low Number: ")
 highest = int_check("High Number: ", lowest + 1)
 rounds = int_check("Rounds: ", 1, 1000, "")
-
 # Start of game loop
+
+end_game = "no"
+# if the user hasn't played all the given rounds
+# continue the loop
 while rounds_played != rounds:
 
     if end_game == "yes":
@@ -192,6 +173,7 @@ while rounds_played != rounds:
         # if user guesses secret print one of the following statements
         if guess == SECRET:
             result = "won"
+            rounds_won += 1
 
             # if user guesses secret first try
             if guesses_left + 1 == GUESSES_ALLOWED:
@@ -207,6 +189,7 @@ while rounds_played != rounds:
             print()
             print("You have run out of guesses. Good try!")
             result = "lost"
+            rounds_lost += 1
 
         # if user runs of of guesses or guesses secret and hasn't played all given rounds
         # continue the loop, reset the list of guesses and reset guesses allowed
